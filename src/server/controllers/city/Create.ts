@@ -16,5 +16,5 @@ export const createValidation = validation((getShema) => ({
 }));
 
 export const create = async (req: Request<any, any, City>, res: Response) => {
-  return res.status(StatusCodes.NOT_IMPLEMENTED).send("Não implementado");
+  return res.status(StatusCodes.CREATED).send("Não implementado");
 };

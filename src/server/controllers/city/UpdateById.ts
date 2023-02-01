@@ -31,5 +31,5 @@ export const updateById = async (
   console.log(req.params);
   console.log(req.body);
 
-  return res.status(StatusCodes.NOT_IMPLEMENTED).send("Não implementado");
+  return res.status(StatusCodes.OK).send("Não implementado");
 };

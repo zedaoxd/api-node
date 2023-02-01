@@ -23,6 +23,8 @@ export const getAll = async (
   req: Request<any, any, any, QueryProps>,
   res: Response
 ) => {
+  res.setHeader("access-control-expose-headers", "x-total-count");
+  res.setHeader("x-total-count", 1);
   console.log(req.query);
-  return res.status(StatusCodes.NOT_IMPLEMENTED).send("Não implementado");
+  return res.status(StatusCodes.OK).send("Não implementado");
 };
