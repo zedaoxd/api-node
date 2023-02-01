@@ -6,5 +6,6 @@ const router = Router();
 router.get("/", (req, res) => res.send("Olá, DEV!"));
 
 router.post("/cities", CityController.createValidation, CityController.create);
+router.get("/cities", CityController.getAllValidation, CityController.getAll);
 
 export { router };
