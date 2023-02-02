@@ -1,15 +1,14 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from "yup";
+import { Cidade } from "../../database/models";
 import { validation } from "../../shared/middleware";
 
 type ParamProps = {
   id?: number;
 };
 
-type BodyProps = {
-  name: string;
-};
+type BodyProps = Omit<Cidade, "id">;
 
 export const updateByIdValidation = validation((getShema) => ({
   params: getShema<ParamProps>(
@@ -19,7 +18,7 @@ export const updateByIdValidation = validation((getShema) => ({
   ),
   body: getShema<BodyProps>(
     yup.object().shape({
-      name: yup.string().required().min(3),
+      nome: yup.string().required().min(3),
     })
   ),
 }));
