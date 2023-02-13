@@ -20,7 +20,7 @@ export const getById = async (req: Request<ParamProps>, res: Response) => {
   const result = await CityProvider.getById(req.params.id!);
 
   if (result === undefined) {
-    return res.status(StatusCodes.BAD_REQUEST).json({
+    return res.status(StatusCodes.NOT_FOUND).json({
       errors: {
         default: "Registro não encontrado",
       },

@@ -2,8 +2,14 @@ import { StatusCodes } from "http-status-codes";
 import { testServer } from "../jest.setup";
 
 describe("ControllerCity - UpdateById", () => {
+  beforeEach(async () => {
+    await testServer.post("/cities").send({
+      nome: "Test",
+    });
+  });
+
   test("ShouldReturnStatus200WhenIdIsValidAndValidBody", async () => {
-    const res1 = await testServer.put("/cities/11").send({ nome: "São Paulo" });
+    const res1 = await testServer.put("/cities/1").send({ nome: "São Paulo" });
 
     expect(res1.status).toEqual(StatusCodes.OK);
   });

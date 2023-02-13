@@ -6,9 +6,10 @@ export const update = async (id: number, cidade: Omit<Cidade, "id">) => {
   try {
     const result = await Knex(ETableNames.cidade)
       .where("id", id)
-      .update(cidade);
+      .update(cidade)
+      .returning("*");
 
-    return result;
+    return result[0];
   } catch (error) {
     console.log(error);
     return false;

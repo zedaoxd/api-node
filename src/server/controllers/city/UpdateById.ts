@@ -28,7 +28,7 @@ export const updateById = async (
   req: Request<ParamProps, any, BodyProps>,
   res: Response
 ) => {
-  const result = await CityProvider.update(req.params.id!, req.body as Cidade);
+  const result = await CityProvider.update(req.params.id!, req.body);
 
   if (!result) {
     return res.status(StatusCodes.NOT_FOUND).json({
@@ -38,5 +38,5 @@ export const updateById = async (
     });
   }
 
-  return res.status(StatusCodes.OK).json("cidade atualizada com sucesso");
+  return res.status(StatusCodes.OK).json(result);
 };

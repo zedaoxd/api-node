@@ -8,6 +8,7 @@ type QueryProps = {
   page?: number;
   size?: number;
   filter?: string;
+  id?: number;
 };
 
 export const getAllValidation = validation((getShema) => ({
@@ -16,6 +17,7 @@ export const getAllValidation = validation((getShema) => ({
       page: yup.number().notRequired().moreThan(0),
       size: yup.number().notRequired().moreThan(0),
       filter: yup.string().notRequired(),
+      id: yup.number().integer().notRequired().default(0),
     })
   ),
 }));
@@ -29,16 +31,11 @@ export const getAll = async (
   const result = await CityProvider.getAll(
     query.page!,
     query.size!,
-    query.filter!
+    query.filter!,
+    query.id!
   );
 
-  const totalElements = await CityProvider.count(query.filter!);
+  const size = await CityProvider.count(query.filter!);
 
-  // res.setHeader("access-control-expose-headers", "x-total-count");
-  // res.setHeader(
-  //   "x-total-count",
-  //   (await CityProvider.count(query.filter!)).toString()
-  // );
-
-  return res.status(StatusCodes.OK).json({ result, totalElements });
+  return res.status(StatusCodes.OK).json({ result, size });
 };
