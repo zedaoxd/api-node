@@ -1,4 +1,13 @@
+import { Knex } from "./server/database/knex";
 import { server } from "./server/Server";
 
-const port = process.env.PORT || 3333;
-server.listen(port, () => console.log(`Server running at port:${port}`));
+const startServer = () => {
+  const port = process.env.PORT || 3333;
+  server.listen(port, () => console.log(`Server running at port:${port}`));
+};
+
+if (process.env.IS_LOCALHOST === "true") {
+  startServer();
+} else {
+  Knex.migrate.latest().then(startServer).catch(console.log);
+}
