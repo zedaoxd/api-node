@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from "yup";
+import { CityProvider } from "../../database/providers/cidades";
 import { validation } from "../../shared/middleware";
 
 type ParamProps = {
@@ -16,6 +17,15 @@ export const getByIdValidation = validation((getShema) => ({
 }));
 
 export const getById = async (req: Request<ParamProps>, res: Response) => {
-  console.log(req.params);
-  return res.status(StatusCodes.OK).send("Não implementado");
+  const result = await CityProvider.getById(req.params.id!);
+
+  if (result === undefined) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      errors: {
+        default: "Registro não encontrado",
+      },
+    });
+  }
+
+  return res.status(StatusCodes.OK).json(result);
 };

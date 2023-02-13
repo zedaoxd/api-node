@@ -3,7 +3,7 @@ import { testServer } from "../jest.setup";
 
 describe("ControllerCity - GetById", () => {
   test("ShouldReturnStatus200WhenIdIsValid", async () => {
-    const res1 = await testServer.get("/cities/1");
+    const res1 = await testServer.get("/cities/9");
 
     expect(res1.status).toEqual(StatusCodes.OK);
   });

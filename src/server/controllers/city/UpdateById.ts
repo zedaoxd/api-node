@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from "yup";
 import { Cidade } from "../../database/models";
+import { CityProvider } from "../../database/providers/cidades";
 import { validation } from "../../shared/middleware";
 
 type ParamProps = {
@@ -18,7 +19,7 @@ export const updateByIdValidation = validation((getShema) => ({
   ),
   body: getShema<BodyProps>(
     yup.object().shape({
-      nome: yup.string().required().min(3),
+      nome: yup.string().required().min(3).max(150),
     })
   ),
 }));
@@ -27,8 +28,15 @@ export const updateById = async (
   req: Request<ParamProps, any, BodyProps>,
   res: Response
 ) => {
-  console.log(req.params);
-  console.log(req.body);
+  const result = await CityProvider.update(req.params.id!, req.body as Cidade);
 
-  return res.status(StatusCodes.OK).send("Não implementado");
+  if (!result) {
+    return res.status(StatusCodes.NOT_FOUND).json({
+      errors: {
+        default: "Registro não encontrado",
+      },
+    });
+  }
+
+  return res.status(StatusCodes.OK).json("cidade atualizada com sucesso");
 };

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from "yup";
+import { CityProvider } from "../../database/providers/cidades";
 import { validation } from "../../shared/middleware";
 
 type QueryProps = {
@@ -23,8 +24,21 @@ export const getAll = async (
   req: Request<any, any, any, QueryProps>,
   res: Response
 ) => {
-  res.setHeader("access-control-expose-headers", "x-total-count");
-  res.setHeader("x-total-count", 1);
-  console.log(req.query);
-  return res.status(StatusCodes.OK).send("Não implementado");
+  const query = req.query;
+
+  const result = await CityProvider.getAll(
+    query.page!,
+    query.size!,
+    query.filter!
+  );
+
+  const totalElements = await CityProvider.count(query.filter!);
+
+  // res.setHeader("access-control-expose-headers", "x-total-count");
+  // res.setHeader(
+  //   "x-total-count",
+  //   (await CityProvider.count(query.filter!)).toString()
+  // );
+
+  return res.status(StatusCodes.OK).json({ result, totalElements });
 };
