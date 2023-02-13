@@ -14,13 +14,13 @@ describe("ControllerCity - Create", () => {
     const res1 = await testServer.post("/cities").send({ name: "Ri" });
 
     expect(res1.statusCode).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
-    expect(res1.body).toHaveProperty("errors.body.name");
+    expect(res1.body).toHaveProperty("errors.body.nome");
   });
 
   test("ShouldReturnStatus422WhenDataIsEmpty", async () => {
     const res1 = await testServer.post("/cities");
 
     expect(res1.statusCode).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
-    expect(res1.body).toHaveProperty("errors.body.name");
+    expect(res1.body).toHaveProperty("errors.body.nome");
   });
 });
