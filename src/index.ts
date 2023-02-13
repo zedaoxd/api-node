@@ -9,5 +9,8 @@ const startServer = () => {
 if (process.env.IS_LOCALHOST === "true") {
   startServer();
 } else {
-  Knex.migrate.latest().then(startServer).catch(console.log);
+  Knex.migrate
+    .latest()
+    .then(() => Knex.seed.run().then(startServer).catch(console.log))
+    .catch(console.log);
 }
