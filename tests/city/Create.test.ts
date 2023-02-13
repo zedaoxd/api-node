@@ -5,7 +5,7 @@ describe("ControllerCity - Create", () => {
   test("ShouldReturnStatus201WhenDataIsValid", async () => {
     const res1 = await testServer
       .post("/cities")
-      .send({ name: "Rio de Janeiro" });
+      .send({ nome: "Rio de Janeiro" });
 
     expect(res1.statusCode).toEqual(StatusCodes.CREATED);
   });

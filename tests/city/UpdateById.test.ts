@@ -3,7 +3,7 @@ import { testServer } from "../jest.setup";
 
 describe("ControllerCity - UpdateById", () => {
   test("ShouldReturnStatus200WhenIdIsValidAndValidBody", async () => {
-    const res1 = await testServer.put("/cities/1").send({ name: "São Paulo" });
+    const res1 = await testServer.put("/cities/1").send({ nome: "São Paulo" });
 
     expect(res1.status).toEqual(StatusCodes.OK);
   });
@@ -12,16 +12,16 @@ describe("ControllerCity - UpdateById", () => {
     const res1 = await testServer.put("/cities/1").send({ namee: "São Paulo" });
 
     expect(res1.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
-    expect(res1.body).toHaveProperty("errors.body.name");
-    expect(res1.body.errors.body.name).toEqual("Este campo é obrigatório");
+    expect(res1.body).toHaveProperty("errors.body.nome");
+    expect(res1.body.errors.body.nome).toEqual("Este campo é obrigatório");
   });
 
   test("ShouldReturnStatus422WhenIdIsValidAndNameLessThen3", async () => {
-    const res1 = await testServer.put("/cities/1").send({ name: "Sã" });
+    const res1 = await testServer.put("/cities/1").send({ nome: "Sã" });
 
     expect(res1.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
-    expect(res1.body).toHaveProperty("errors.body.name");
-    expect(res1.body.errors.body.name).toEqual(
+    expect(res1.body).toHaveProperty("errors.body.nome");
+    expect(res1.body.errors.body.nome).toEqual(
       "Deve ter pelo menos 3 caracteres"
     );
   });
@@ -35,13 +35,13 @@ describe("ControllerCity - UpdateById", () => {
   });
 
   test("ShouldReturnStatus422WhenIdIsZeroAndInvalidName", async () => {
-    const res1 = await testServer.put("/cities/0").send({ name: "Sã" });
+    const res1 = await testServer.put("/cities/0").send({ nome: "Sã" });
 
     expect(res1.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
     expect(res1.body).toHaveProperty("errors.params.id");
-    expect(res1.body).toHaveProperty("errors.body.name");
+    expect(res1.body).toHaveProperty("errors.body.nome");
     expect(res1.body.errors.params.id).toEqual("Deve ser maior que 0");
-    expect(res1.body.errors.body.name).toEqual(
+    expect(res1.body.errors.body.nome).toEqual(
       "Deve ter pelo menos 3 caracteres"
     );
   });
